@@ -4,5 +4,5 @@ pandas
 numpy
 scikit-learn
 ta
-xgboost
-tensorflow
+xgboost==1.7.6
+tensorflow==2.13.0
