@@ -56,22 +56,16 @@ if st.button("Prever Alta ou Baixa"):
         fng = obter_indice_medo_ganancia()
         df["FNG"] = fng / 100.0
 
-        # Normalizar os dados
         features = ["Close", "RSI", "EMA", "MACD", "STOCH", "CCI", "BOLL", "OBV", "FNG"]
         scaler = MinMaxScaler()
         scaled = scaler.fit_transform(df[features])
-
-        # Preparar sequência
         X_input = scaled[-60:].reshape(1, 60, len(features))
 
-        # Carregar modelo
         if not os.path.exists("modelo_lstm.h5"):
             st.error("Arquivo do modelo 'modelo_lstm.h5' não encontrado. Faça upload no repositório.")
         else:
             model = load_model("modelo_lstm.h5")
             pred = model.predict(X_input)[0][0]
-
-            # Decisão baseada em previsão e mudança esperada
             movimento = "ALTA" if pred > df["Close"].pct_change().mean() else "BAIXA"
             st.success(f"Previsão para os próximos {passos_previsao} períodos ({opcao}): **{movimento}**")
             st.line_chart(df["Close"])
