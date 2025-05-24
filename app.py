@@ -69,3 +69,4 @@ if st.button("Prever Alta ou Baixa"):
             movimento = "ALTA" if pred > df["Close"].pct_change().mean() else "BAIXA"
             st.success(f"Previsão para os próximos {passos_previsao} períodos ({opcao}): **{movimento}**")
             st.line_chart(df["Close"])
+        
